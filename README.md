@@ -126,92 +126,94 @@ KEY : /etc/ssl/private/formation.lan.key
 
 - Windows : C:\Windows\System32\drivers\etc\hosts
 
-Exemple : 192.168.X.Y  formation.lan
+- Exemple : 192.168.X.Y  formation.lan
 
 2) Avertissement navigateur (normal)
 
 Self-signed = warning tant que le certificat n’est pas approuvé.
-Deux options :
-
-accepter l’exception (lab/formation)
-
-ou mieux : PKI interne (roadmap)
+- Deux options :
+  - accepter l’exception (lab/formation)
+  - ou mieux : PKI interne (roadmap)
 
 3) Config eBrigade
 
 Selon la distribution, eBrigade se configure via :
 
-un wizard web
+- un wizard web
+- ou un fichier type config.php
 
-ou un fichier type config.php
+- Le script fournit :
 
-Le script fournit :
+  - DB_NAME : ebrigade
 
-DB_NAME : ebrigade
+  - DB_USER : ebrigade
 
-DB_USER : ebrigade
+  - DB_PASS : affiché en fin d’installation
 
-DB_PASS : affiché en fin d’installation
-
-Désinstallation
+# Désinstallation
 
 ⚠️ Attention, ça supprime fichiers + vhost + base (si tu veux).
 
-Désactiver le vhost :
-
+- Désactiver le vhost :
+```bash
 sudo a2dissite ebrigade.conf
 sudo systemctl reload apache2
-
+```
 
 ## Supprimer les fichiers :
-
+```bash
 sudo rm -rf /var/www/ebrigade
 sudo rm -f /etc/apache2/sites-available/ebrigade.conf
+```
 
-
-Supprimer DB + user :
-
+## Supprimer DB + user :
+```bash
 sudo mysql -u root -e "DROP DATABASE IF EXISTS ebrigade;"
 sudo mysql -u root -e "DROP USER IF EXISTS 'ebrigade'@'localhost'; FLUSH PRIVILEGES;"
-
+```
 ## Sécurité
 
-Self-signed = OK pour LAN, pas idéal en prod
+- Self-signed = OK pour LAN, pas idéal en prod
 
-Reco prod :
+- Reco prod :
 
-Certificat signé par une CA interne ou Let’s Encrypt
+  - Certificat signé par une CA interne ou Let’s Encrypt
 
-Durcir php.ini, limiter upload si inutile
+  - Durcir php.ini, limiter upload si inutile
 
-Sauvegardes DB + répertoire d’upload
+  - Sauvegardes DB + répertoire d’upload
 
-Mettre eBrigade derrière un reverse-proxy si besoin
+  - Mettre eBrigade derrière un reverse-proxy si besoin
 
-Journaliser + surveiller les erreurs Apache/PHP
+  - Journaliser + surveiller les erreurs Apache/PHP
 
 ## Dépannage
+```bash
 Logs Apache
 sudo tail -n 80 /var/log/apache2/ebrigade_ssl_error.log
 sudo tail -n 80 /var/log/apache2/ebrigade_error.log
+```
 
-Vérifier PHP
+- Vérifier PHP
+```bash
 php -v
 php -m | egrep 'mysqli|mbstring|xml|gd|zip|curl'
+```
 
-Test VHost
+- Test VHost
+```bash
 sudo apache2ctl -S
 sudo apache2ctl configtest
-
+```
 ## Roadmap
 
- Mode “PKI interne” (root CA + cert serveur + import Windows/Linux)
+ - Mode “PKI interne” (root CA + cert serveur + import Windows/Linux)
 
- Auto-détection et patch du fichier de config eBrigade (DB_HOST/DB_NAME/…)
+- Auto-détection et patch du fichier de config eBrigade (DB_HOST/DB_NAME/…)
 
- Support Debian 12 via conteneur PHP 7.4 (Docker/Podman)
+ - Support Debian 12 via conteneur PHP 7.4 (Docker/Podman)
 
- Backup/restore (DB + uploads) en 2 commandes
+ - Backup/restore (DB + uploads) en 2 commandes
 
 ## Licence
 
