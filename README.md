@@ -70,7 +70,7 @@ Déploiement **propre et reproductible** de **eBrigade 5.3.2** sur **Debian 11**
 git clone https://github.com/sbeteta42/ebrigade.git
 cd ebrigade
 Copie le ZIP eBrigade sur le serveur (ex: /root/ebrigade-5.3.2.zip)
-```bash
+```
 
 2) Lance l’installation :
 ```bash
