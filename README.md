@@ -77,27 +77,27 @@ Copie le ZIP eBrigade sur le serveur (ex: /root/ebrigade-5.3.2.zip)
 chmod +x install-ebrigade.sh
 sudo ./install-ebrigade.sh --zip /root/ebrigade-5.3.2.zip
 ```
-- Par défaut :
+###Par défaut :
 
-Domaine : formation.lan
+- Domaine : formation.lan
 
-Dossier web : /var/www/ebrigade
+- Dossier web : /var/www/ebrigade
 
-DB : ebrigade / user ebrigade / mot de passe généré
+- DB : ebrigade / user: ebrigade / mot de passe: operations
 
-Options utiles
+- Options utiles
 sudo ./install-ebrigade.sh \
   --zip /root/ebrigade-5.3.2.zip \
   --domain formation.lan \
-  --db-pass "MotDePasseFort_ChangeMoi"
+  --db-pass "operations"
 
-Ce que fait le script
+# Ce que fait le script
 
-Installe : apache2, mariadb-server, php7.4, modules PHP nécessaires
+- Installe : apache2, mariadb-server, php7.4, modules PHP nécessaires
 
-Active : rewrite, headers, ssl
+- Active : rewrite, headers, ssl
 
-Crée :
+- Crée :
 
 Base : ebrigade (utf8mb4)
 
@@ -117,18 +117,16 @@ CRT : /etc/ssl/localcerts/formation.lan.crt
 
 KEY : /etc/ssl/private/formation.lan.key
 
-Post-installation
+# Post-installation
 1) Résolution DNS (LAN)
 
-Sur tes postes clients (si pas de DNS interne), ajoute dans hosts :
+- Sur tes postes clients (si pas de DNS interne), ajoute dans hosts :
 
-Linux : /etc/hosts
+- Linux : /etc/hosts
 
-Windows : C:\Windows\System32\drivers\etc\hosts
+- Windows : C:\Windows\System32\drivers\etc\hosts
 
-Exemple :
-
-192.168.X.Y  formation.lan
+Exemple : 192.168.X.Y  formation.lan
 
 2) Avertissement navigateur (normal)
 
@@ -165,7 +163,7 @@ sudo a2dissite ebrigade.conf
 sudo systemctl reload apache2
 
 
-Supprimer les fichiers :
+# Supprimer les fichiers :
 
 sudo rm -rf /var/www/ebrigade
 sudo rm -f /etc/apache2/sites-available/ebrigade.conf
@@ -176,7 +174,7 @@ Supprimer DB + user :
 sudo mysql -u root -e "DROP DATABASE IF EXISTS ebrigade;"
 sudo mysql -u root -e "DROP USER IF EXISTS 'ebrigade'@'localhost'; FLUSH PRIVILEGES;"
 
-Sécurité
+# Sécurité
 
 Self-signed = OK pour LAN, pas idéal en prod
 
@@ -192,7 +190,7 @@ Mettre eBrigade derrière un reverse-proxy si besoin
 
 Journaliser + surveiller les erreurs Apache/PHP
 
-Dépannage
+# Dépannage
 Logs Apache
 sudo tail -n 80 /var/log/apache2/ebrigade_ssl_error.log
 sudo tail -n 80 /var/log/apache2/ebrigade_error.log
@@ -205,7 +203,7 @@ Test VHost
 sudo apache2ctl -S
 sudo apache2ctl configtest
 
-Roadmap
+# Roadmap
 
  Mode “PKI interne” (root CA + cert serveur + import Windows/Linux)
 
@@ -215,11 +213,11 @@ Roadmap
 
  Backup/restore (DB + uploads) en 2 commandes
 
-Licence
+# Licence
 
-MIT — voir LICENSE
+MIT - voir LICENSE
 
-Crédits
+# Crédits
 
 Scripts & packaging : shadowhacker
 
