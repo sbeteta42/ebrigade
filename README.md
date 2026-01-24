@@ -67,5 +67,162 @@ Déploiement **propre et reproductible** de **eBrigade 5.3.2** sur **Debian 11**
 1) Clone le dépôt :
 
 ```bash
-git clone https://github.com/<ton-user>/<ton-repo>.git
-cd <ton-repo>
+git clone https://github.com/sbeteta42/ebrigade.git
+cd ebrigade
+Copie le ZIP eBrigade sur le serveur (ex: /root/ebrigade-5.3.2.zip)
+```bash
+
+2) Lance l’installation :
+```bash
+chmod +x install-ebrigade.sh
+sudo ./install-ebrigade.sh --zip /root/ebrigade-5.3.2.zip
+```
+- Par défaut :
+
+Domaine : formation.lan
+
+Dossier web : /var/www/ebrigade
+
+DB : ebrigade / user ebrigade / mot de passe généré
+
+Options utiles
+sudo ./install-ebrigade.sh \
+  --zip /root/ebrigade-5.3.2.zip \
+  --domain formation.lan \
+  --db-pass "MotDePasseFort_ChangeMoi"
+
+Ce que fait le script
+
+Installe : apache2, mariadb-server, php7.4, modules PHP nécessaires
+
+Active : rewrite, headers, ssl
+
+Crée :
+
+Base : ebrigade (utf8mb4)
+
+User : ebrigade@localhost (+ droits complets sur la base)
+
+Déploie le ZIP dans /var/www/ebrigade
+
+Pose un VHost Apache :
+
+:80 → redirect vers https://formation.lan/
+
+:443 → SSL + DocumentRoot eBrigade
+
+Génère un certificat self-signed :
+
+CRT : /etc/ssl/localcerts/formation.lan.crt
+
+KEY : /etc/ssl/private/formation.lan.key
+
+Post-installation
+1) Résolution DNS (LAN)
+
+Sur tes postes clients (si pas de DNS interne), ajoute dans hosts :
+
+Linux : /etc/hosts
+
+Windows : C:\Windows\System32\drivers\etc\hosts
+
+Exemple :
+
+192.168.X.Y  formation.lan
+
+2) Avertissement navigateur (normal)
+
+Self-signed = warning tant que le certificat n’est pas approuvé.
+Deux options :
+
+accepter l’exception (lab/formation)
+
+ou mieux : PKI interne (roadmap)
+
+3) Config eBrigade
+
+Selon la distribution, eBrigade se configure via :
+
+un wizard web
+
+ou un fichier type config.php
+
+Le script fournit :
+
+DB_NAME : ebrigade
+
+DB_USER : ebrigade
+
+DB_PASS : affiché en fin d’installation
+
+Désinstallation
+
+⚠️ Attention, ça supprime fichiers + vhost + base (si tu veux).
+
+Désactiver le vhost :
+
+sudo a2dissite ebrigade.conf
+sudo systemctl reload apache2
+
+
+Supprimer les fichiers :
+
+sudo rm -rf /var/www/ebrigade
+sudo rm -f /etc/apache2/sites-available/ebrigade.conf
+
+
+Supprimer DB + user :
+
+sudo mysql -u root -e "DROP DATABASE IF EXISTS ebrigade;"
+sudo mysql -u root -e "DROP USER IF EXISTS 'ebrigade'@'localhost'; FLUSH PRIVILEGES;"
+
+Sécurité
+
+Self-signed = OK pour LAN, pas idéal en prod
+
+Reco prod :
+
+Certificat signé par une CA interne ou Let’s Encrypt
+
+Durcir php.ini, limiter upload si inutile
+
+Sauvegardes DB + répertoire d’upload
+
+Mettre eBrigade derrière un reverse-proxy si besoin
+
+Journaliser + surveiller les erreurs Apache/PHP
+
+Dépannage
+Logs Apache
+sudo tail -n 80 /var/log/apache2/ebrigade_ssl_error.log
+sudo tail -n 80 /var/log/apache2/ebrigade_error.log
+
+Vérifier PHP
+php -v
+php -m | egrep 'mysqli|mbstring|xml|gd|zip|curl'
+
+Test VHost
+sudo apache2ctl -S
+sudo apache2ctl configtest
+
+Roadmap
+
+ Mode “PKI interne” (root CA + cert serveur + import Windows/Linux)
+
+ Auto-détection et patch du fichier de config eBrigade (DB_HOST/DB_NAME/…)
+
+ Support Debian 12 via conteneur PHP 7.4 (Docker/Podman)
+
+ Backup/restore (DB + uploads) en 2 commandes
+
+Licence
+
+MIT — voir LICENSE
+
+Crédits
+
+Scripts & packaging : shadowhacker
+
+eBrigade : appartient à son éditeur (non distribué ici)
+
+Si tu utilises ce dépôt en formation : tu peux le forker et adapter formation.lan, les IP et les paramètres de lab.
