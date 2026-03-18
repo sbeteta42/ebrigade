@@ -15,7 +15,7 @@ Déploiement **propre et reproductible** de **eBrigade 5.3.2** sur **Debian 11**
 
 ---
 
-## Sommaire
+## 📑 Sommaire
 
 - [Objectif](#objectif)
 - [Pré-requis](#pré-requis)
@@ -45,7 +45,7 @@ Déploiement **propre et reproductible** de **eBrigade 5.3.2** sur **Debian 11**
 
 ---
 
-## Pré-requis
+## 🔧 Pré-requis
 
 - Une VM / serveur **Debian 11 (Bullseye)**
 - Accès root (`sudo`)
@@ -54,7 +54,7 @@ Déploiement **propre et reproductible** de **eBrigade 5.3.2** sur **Debian 11**
 
 ---
 
-## Compatibilité
+## 📦 Compatibilité
 
 - eBrigade **5.3.2** : **PHP 7.0 → 7.4.99** ✅  
 - Debian 11 : PHP **7.4** dans les dépôts officiels ✅  
@@ -62,14 +62,14 @@ Déploiement **propre et reproductible** de **eBrigade 5.3.2** sur **Debian 11**
 
 ---
 
-## Installation rapide
+## 🛠️ Installation rapide
 
 1) Clone le dépôt :
 
 ```bash
 git clone https://github.com/sbeteta42/ebrigade.git
 cd ebrigade
-#Copie le ZIP eBrigade sur le serveur (ex: /root/ebrigade-5.3.2.zip)
+#Copier le fichier ZIP de eBrigade sur le serveur (ex: /root/ebrigade-5.3.2.zip)
 ```
 
 2) Lance l’installation :
@@ -91,7 +91,7 @@ sudo ./install-ebrigade.sh \
   --domain formation.lan \
   --db-pass "operations"
 
-## Ce que fait le script
+## 💡 Ce que fait le script
 
 - Installe : apache2, mariadb-server, php7.4, modules PHP nécessaires
 
@@ -117,7 +117,7 @@ CRT : /etc/ssl/localcerts/formation.lan.crt
 
 KEY : /etc/ssl/private/formation.lan.key
 
-## Post-installation
+## 🖥️ Post-installation
 1) Résolution DNS (LAN)
 
 - Sur tes postes clients (si pas de DNS interne), ajoute dans hosts :
@@ -150,7 +150,7 @@ Selon la distribution, eBrigade se configure via :
 
   - DB_PASS : affiché en fin d’installation
 
-# Désinstallation
+# 🚀 Désinstallation
 
 ⚠️ Attention, ça supprime fichiers + vhost + base (si tu veux).
 
@@ -187,7 +187,7 @@ sudo mysql -u root -e "DROP USER IF EXISTS 'ebrigade'@'localhost'; FLUSH PRIVILE
 
   - Journaliser + surveiller les erreurs Apache/PHP
 
-## Dépannage
+## 📚 Dépannage
 ```bash
 Logs Apache
 sudo tail -n 80 /var/log/apache2/ebrigade_ssl_error.log
@@ -215,11 +215,11 @@ sudo apache2ctl configtest
 
  - Backup/restore (DB + uploads) en 2 commandes
 
-## Licence
+## 📜 Licence
 
 MIT - voir LICENSE
 
-## Crédits
+## 👋 Crédits
 
 Scripts & packaging : shadowhacker
 
