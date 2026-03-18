@@ -1,6 +1,5 @@
-<CENTER>
-  # eBrigade : Déploiement automatisé (Debian 11 / PHP 7.4)
-</CENTER>
+ <h1 align="center"> eBrigade : Déploiement automatisé (Debian 11 / PHP 7.4)</h1>
+
 
 [![Debian](https://img.shields.io/badge/Debian-11%20(Bullseye)-A81D33?logo=debian&logoColor=white)](#)
 [![Apache](https://img.shields.io/badge/Apache-2.4-D22128?logo=apache&logoColor=white)](#)
