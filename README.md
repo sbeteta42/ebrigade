@@ -16,7 +16,7 @@ Déploiement **propre et reproductible** de **eBrigade 5.3.2** sur **Debian 11**
 
 ---
 
-## 📑 Sommaire
+## 📚 Sommaire
 
 - [Objectif](#objectif)
 - [Pré-requis](#pré-requis)
@@ -46,7 +46,7 @@ Déploiement **propre et reproductible** de **eBrigade 5.3.2** sur **Debian 11**
 
 ---
 
-## 🔧 Pré-requis
+## 📋 Pré-requis
 
 - Une VM / serveur **Debian 11 (Bullseye)**
 - Accès root (`sudo`)
@@ -63,7 +63,7 @@ Déploiement **propre et reproductible** de **eBrigade 5.3.2** sur **Debian 11**
 
 ---
 
-## 🛠️ Installation rapide
+## ⚙️ Installation rapide
 
 1) Clone le dépôt :
 
@@ -151,7 +151,7 @@ Selon la distribution, eBrigade se configure via :
 
   - DB_PASS : affiché en fin d’installation
 
-# 🚀 Désinstallation
+# 🧹 Désinstallation
 
 ⚠️ Attention, ça supprime fichiers + vhost + base (si tu veux).
 
@@ -172,7 +172,7 @@ sudo rm -f /etc/apache2/sites-available/ebrigade.conf
 sudo mysql -u root -e "DROP DATABASE IF EXISTS ebrigade;"
 sudo mysql -u root -e "DROP USER IF EXISTS 'ebrigade'@'localhost'; FLUSH PRIVILEGES;"
 ```
-## 🔥 Sécurité
+## 🔐 Sécurité
 
 - Self-signed = OK pour LAN, pas idéal en prod
 
@@ -188,7 +188,7 @@ sudo mysql -u root -e "DROP USER IF EXISTS 'ebrigade'@'localhost'; FLUSH PRIVILE
 
   - Journaliser + surveiller les erreurs Apache/PHP
 
-## 📚 Dépannage
+## 🛠️ Dépannage
 ```bash
 Logs Apache
 sudo tail -n 80 /var/log/apache2/ebrigade_ssl_error.log
@@ -206,7 +206,7 @@ php -m | egrep 'mysqli|mbstring|xml|gd|zip|curl'
 sudo apache2ctl -S
 sudo apache2ctl configtest
 ```
-## Roadmap
+## 🗺️ Roadmap
 
  - Mode “PKI interne” (root CA + cert serveur + import Windows/Linux)
 
@@ -226,4 +226,4 @@ Scripts & packaging : shadowhacker
 
 eBrigade : appartient à son éditeur (non distribué ici)
 
-Si tu utilises ce dépôt en formation : tu peux le forker et adapter formation.lan, les IP et les paramètres de lab.
+Si tu utilises ce dépôt en formation : tu peux le forker et adapter formation.lan, les IP et les paramètres de ce lab.
