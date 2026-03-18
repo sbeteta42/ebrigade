@@ -171,7 +171,7 @@ sudo rm -f /etc/apache2/sites-available/ebrigade.conf
 sudo mysql -u root -e "DROP DATABASE IF EXISTS ebrigade;"
 sudo mysql -u root -e "DROP USER IF EXISTS 'ebrigade'@'localhost'; FLUSH PRIVILEGES;"
 ```
-## Sécurité
+## 🔥 Sécurité
 
 - Self-signed = OK pour LAN, pas idéal en prod
 
